@@ -1,4 +1,4 @@
-namespace SampleWebApi
+namespace SampleWebApi.Models
 {
     public class WeatherForecast
     {
