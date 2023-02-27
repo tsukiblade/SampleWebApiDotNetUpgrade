@@ -17,7 +17,6 @@ namespace SampleWebApi
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<TodoContext>(opt =>
                 opt.UseSqlServer(connectionString));
-
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
