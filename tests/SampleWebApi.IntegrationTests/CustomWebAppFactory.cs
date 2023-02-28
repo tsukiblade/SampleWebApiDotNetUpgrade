@@ -19,7 +19,7 @@ namespace SampleWebApi.IntegrationTests
 
         public CustomWebAppFactory()
         {
-            _dbContainer = new ContainerBuilder<MsSqlTestcontainer>()
+            _dbContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
                 .WithDatabase(new MsSqlTestcontainerConfiguration
                 {
                     Password = "Pass@word",
@@ -33,7 +33,7 @@ namespace SampleWebApi.IntegrationTests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureTestServices(services =>
+            builder.ConfigureServices(services =>
             {
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TodoContext>));
 
@@ -46,9 +46,13 @@ namespace SampleWebApi.IntegrationTests
             });
         }
 
+
         public async Task Init()
         {
             await _dbContainer.StartAsync();
+
+            var context = Services.GetRequiredService<TodoContext>();
+            await context.Database.MigrateAsync();
         }
 
         public override ValueTask DisposeAsync()
