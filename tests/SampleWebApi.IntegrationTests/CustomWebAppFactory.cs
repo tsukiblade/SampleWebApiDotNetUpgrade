@@ -3,7 +3,7 @@ using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SampleWebApi.Models;
@@ -42,7 +42,7 @@ namespace SampleWebApi.IntegrationTests
                     services.Remove(descriptor);
                 }
 
-                services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(_dbContainer.ConnectionString));
+                services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(EnsureValidConnectionString(_dbContainer.ConnectionString, "SampleApiDb")));
             });
         }
 
@@ -51,7 +51,14 @@ namespace SampleWebApi.IntegrationTests
         {
             await _dbContainer.StartAsync();
 
-            var context = Services.GetRequiredService<TodoContext>();
+            using var connection = new SqlConnection(EnsureValidConnectionString(_dbContainer.ConnectionString, null));
+            await connection.OpenAsync();
+            var command = new SqlCommand("CREATE DATABASE SampleApiDb", connection);
+            await command.ExecuteNonQueryAsync();
+            connection.Close();
+
+            using var scope = Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<TodoContext>();
             await context.Database.MigrateAsync();
         }
 
@@ -59,6 +66,18 @@ namespace SampleWebApi.IntegrationTests
         {
             _dbContainer.DisposeAsync();
             return base.DisposeAsync();
+        }
+
+        private string EnsureValidConnectionString(string connectionString, string? databaseName)
+        {
+            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+            sqlConnectionStringBuilder.TrustServerCertificate = true;
+            if (databaseName != null)
+            {
+                sqlConnectionStringBuilder.InitialCatalog = databaseName;
+            }
+
+            return sqlConnectionStringBuilder.ToString();
         }
     }
 }

@@ -14,21 +14,26 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture.NUnit3" Version="4.18.0" />
-    <PackageReference Include="coverlet.collector" Version="3.2.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="FluentAssertions" Version="6.10.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.6.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="4.4.0" />
-    <PackageReference Include="Testcontainers" Version="2.1.0" />
+	  <PackageReference Include="Autofac.Extras.Moq" Version="6.1.0" />
+	  <PackageReference Include="AutoFixture.NUnit3" Version="4.17.0" />
+	  <PackageReference Include="FluentAssertions" Version="6.7.0" />
+	  <PackageReference Include="FluentMigrator" Version="3.3.2" />
+	  <PackageReference Include="FluentMigrator.Console" Version="3.3.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+	  <PackageReference Include="MockServerClientNet" Version="1.2.0" />
+	  <PackageReference Include="NUnit" Version="3.13.3" />
+	  <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+	  <PackageReference Include="coverlet.collector" Version="3.1.2" />
+	  <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+	  <PackageReference Include="Testcontainers" Version="2.1.0" />
+	  <PackageReference Include="Watts.Backend.Platform.ComponentTesting" Version="1.0.6" />
+	  <PackageReference Include="xunit" Version="2.4.2" />
+	  <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
